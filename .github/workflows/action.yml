@@ -18,5 +18,6 @@ jobs:
         env:
           USERNAME: ${{ secrets.DOCKER_USERNAME }}
           PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          IMAGE_NAME: "tommynovember7/aws-cli"
           TAG_NAME: latest
           LATEST: "true"
