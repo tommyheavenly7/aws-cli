@@ -9,3 +9,5 @@ RUN apk --update add \
 
 RUN pip3 install awscli --upgrade
 RUN bash -c 'echo complete -C '/usr/local/bin/aws_completer' aws  >> $HOME/.bashrc'
+
+ADD run_tests.sh /var/run_tests.sh
