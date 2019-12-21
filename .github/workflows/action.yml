@@ -4,20 +4,20 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-        with:
-          fetch-depth: 1
+    env:
+      AWS_KEY: ${{ secrets.AWS_KEY }}
+      AWS_SECRET: ${{ secrets.AWS_SECRET }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
 
-      - name: Build & Push to Docker Hub
-        uses: opspresso/action-docker@master
-        env:
-          USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          IMAGE_NAME: "tommynovember7/aws-cli"
-          TAG_NAME: latest
-          LATEST: "true"
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build the container
+        run: |
+          docker-compose up --no-start --force-recreate --build
+          docker-compose ps
+
+      - name: Run tests
+        run: docker-compose run --rm sut

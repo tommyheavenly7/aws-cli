@@ -8,6 +8,7 @@ services:
         environment:
             - AWS_ACCESS_KEY_ID=$AWS_KEY
             - AWS_SECRET_ACCESS_KEY=$AWS_SECRET
+            - AWS_DEFAULT_REGION=$AWS_REGION
         volumes:
             - ./project:/var/project
         working_dir: /var/project
