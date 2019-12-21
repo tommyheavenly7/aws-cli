@@ -1,14 +1,21 @@
 version: '3.5'
-services: 
+services:
     aws:
         container_name: aws-cli_command
-        build: 
+        build:
             context: docker/python
             dockerfile: Dockerfile
         environment:
             - AWS_ACCESS_KEY_ID=$AWS_KEY
             - AWS_SECRET_ACCESS_KEY=$AWS_SECRET
-        volumes: 
+        volumes:
             - ./project:/var/project
         working_dir: /var/project
         entrypoint: ['/usr/local/bin/aws']
+
+    sut:
+        container_name: aws-cli_sut
+        build:
+            context: docker/python
+            dockerfile: Dockerfile
+        command: ['/var/run_tests.sh']
