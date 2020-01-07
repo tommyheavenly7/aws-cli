@@ -52,12 +52,17 @@ $ docker-compose ps
 aws-cli_command   /usr/local/bin/aws   Exit 0
 ```
 
-Finally, you can use the command `_run` bundled with the project.
+Finally, you can use the command.
 
 ```shellscript
-$ _run aws --version
-aws-cli/1.16.307 Python/3.8.0 Linux/4.9.184-linuxkit botocore/1.13.43
+$ command -v aws
+alias aws='docker-compose run --rm aws'
+
+$ aws --version
+aws-cli/1.16.308 Python/3.8.0 Linux/4.9.184-linuxkit botocore/1.13.44
 ```
+
+### Using docker command
 
 ## Appendix
 
