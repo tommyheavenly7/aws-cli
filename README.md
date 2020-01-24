@@ -11,9 +11,9 @@ This project will provide both the Dockerfile to create `aws-cli` container and 
 Before running the container, you should set required environment variables:
 
 ```bash
-$ export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
-$ export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-$ export AWS_DEFAULT_REGION=us-west-2
+$ export AWS_ACCESS_KEY_ID=******
+$ export AWS_SECRET_ACCESS_KEY=******
+$ export AWS_DEFAULT_REGION=******
 ```
 
 ### Running the container with docker command
