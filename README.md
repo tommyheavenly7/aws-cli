@@ -6,7 +6,31 @@ This project will provide both the Dockerfile to create `aws-cli` container and 
 
 ## Basic Usage
 
-### Prepare container using `docker-compose`
+### Setting environment variables 
+
+Before running the container, you should set required environment variables:
+
+```bash
+$ export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+$ export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+$ export AWS_DEFAULT_REGION=us-west-2
+```
+
+### Running the container with docker command
+
+You can run the following command as AWS CLI:
+
+```bash
+docker run --rm -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -e "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" -v "$(pwd):/project" --entrypoint /usr/local/bin/aws tommynovember7/aws-cli:latest
+``` 
+
+```bash
+$ docker run --rm -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -e "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" -v "$(pwd):/project" --entrypoint /usr/local/bin/aws tommynovember7/aws-cli:latest
+ --version
+aws-cli/1.17.8 Python/3.8.1 Linux/4.19.76-linuxkit botocore/1.14.8
+```
+
+### Running the container using `docker-compose`
 
 You might want to clone the project before starting.
 
@@ -39,8 +63,8 @@ source docker/.bashrc
 After that, build and up the container
 
 ```shellscript
-docker-compose build --pull
-docker-compose up --no-start
+docker-compose build --force-rm --pull
+docker-compose up --no-start --force-recreate --remove-orphans
 ```
 
 Please confirm whether the container is ready.
@@ -59,10 +83,8 @@ $ command -v aws
 alias aws='docker-compose run --rm aws'
 
 $ aws --version
-aws-cli/1.16.308 Python/3.8.0 Linux/4.9.184-linuxkit botocore/1.13.44
+aws-cli/1.17.8 Python/3.8.1 Linux/4.19.76-linuxkit botocore/1.14.8
 ```
-
-### Using docker command
 
 ## Appendix
 
