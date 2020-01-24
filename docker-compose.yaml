@@ -2,9 +2,7 @@ version: '3.5'
 services:
   aws:
     container_name: aws-cli_command
-    build:
-      context: docker/python
-      dockerfile: Dockerfile
+    image: tommynovember7/aws-cli:latest
     environment:
       - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
