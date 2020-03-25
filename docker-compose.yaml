@@ -9,7 +9,7 @@ services:
       - AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
     volumes:
       - ./project:/var/project
-    working_dir: /var/project
+    working_dir: /var
     entrypoint: ['/usr/local/bin/aws']
 
   sut:
