@@ -13,4 +13,5 @@ RUN bash -c 'echo complete -C '/usr/local/bin/aws_completer' aws  >> $HOME/.bash
 
 COPY ./run_tests.sh /var/run_tests.sh
 
+WORKDIR /aws
 ENTRYPOINT [ "/usr/local/bin/aws" ]
