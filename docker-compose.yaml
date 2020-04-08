@@ -15,6 +15,7 @@ services:
     build:
       context: docker/python
       dockerfile: Dockerfile
+    entrypoint: ['/var/run_tests.sh']
     command: ['/var/run_tests.sh']
 
   hadolint:
