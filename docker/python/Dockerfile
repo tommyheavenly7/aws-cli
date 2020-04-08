@@ -7,8 +7,10 @@ RUN apk --no-cache add \
     "jq>=1.6-r0" \
     "less>=551-r0"
 
-RUN pip install --upgrade 'pip>=20.0.1'
-RUN pip install --upgrade 'awscli>=1.17.8'
+RUN pip install --upgrade "pip>=20.0.1"
+RUN pip install --upgrade "awscli>=1.17.8"
 RUN bash -c 'echo complete -C '/usr/local/bin/aws_completer' aws  >> $HOME/.bashrc'
 
 COPY ./run_tests.sh /var/run_tests.sh
+
+ENTRYPOINT [ "/usr/local/bin/aws" ]
