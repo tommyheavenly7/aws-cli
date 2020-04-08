@@ -1,12 +1,34 @@
 # aws-cli
 
-Containerised AWS CLI using [Python official image](https://hub.docker.com/_/python).
-
-This project will provide both the Dockerfile to create `aws-cli` container and an example how to use it with `docker-compose`.
+This is a containerised AWS CLI using [Python official image](https://hub.docker.com/_/python).
 
 ## Basic Usage
 
-### Setting environment variables 
+### Using existing credentials
+
+If you already have IAM credentials in `~/.aws`, of course, you can use it:
+
+```bash
+docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws tommynovember7/aws-cli:latest
+```
+
+You would be better to add the command into `~/.bashrc` as an alias:
+
+```bash
+# ~/.bashrc
+
+alias aws='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws tommynovember7/aws-cli:latest'
+```
+
+```bash
+$ command -v aws
+alias aws='docker run --rm -ti -v ~/.aws:/root/.aws -v $(pwd):/project tommynovember7/aws-cli:latest'
+$ aws --version
+aws-cli/1.18.39 Python/3.8.2 Linux/4.19.76-linuxkit botocore/1.15.39
+
+```
+
+### Using environment variables 
 
 Before running the container, you should set required environment variables:
 
@@ -16,34 +38,32 @@ $ export AWS_SECRET_ACCESS_KEY=******
 $ export AWS_DEFAULT_REGION=******
 ```
 
-### Running the container with docker command
-
 You can run the following command as AWS CLI:
 
 ```bash
-docker run --rm -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -e "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" -v "$(pwd):/project" --entrypoint /usr/local/bin/aws tommynovember7/aws-cli:latest
+docker run --rm -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -e "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" -v "$(pwd):/aws" tommynovember7/aws-cli:latest
 ``` 
 
 ```bash
-$ docker run --rm -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -e "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" -v "$(pwd):/project" --entrypoint /usr/local/bin/aws tommynovember7/aws-cli:latest
+$ docker run --rm -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -e "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" -v "$(pwd):/aws" tommynovember7/aws-cli:latest
  --version
-aws-cli/1.17.8 Python/3.8.1 Linux/4.19.76-linuxkit botocore/1.14.8
+aws-cli/1.18.39 Python/3.8.2 Linux/4.19.76-linuxkit botocore/1.15.39
 ```
 
-### Running the container using `docker-compose`
+### Running the container using `docker-compose.`
 
 You might want to clone the project before starting.
 
-```shellscript
+```bash
 git clone git@github.com:tommyheavenly7/aws-cli.git
 cd aws-cli
 ```
 
 First, please think whether you want to replace the `project` directory with your working project. `docker-compose` will mount the project directory as `/var/project`, and it will be the working_dir.
 
-``` shellscript
+```bash
 $ ls
-README.md  docker   docker-compose.yaml project
+README.md  docker docker-compose.yaml project
 ```
 
 Next, configure environment variables. They are defined in `docker/.bashrc`. You can edit it as you like.
@@ -60,7 +80,7 @@ Load the environment variables you defined.
 source docker/.bashrc
 ```
 
-After that, build and up the container
+After that, build and up the container.
 
 ```shellscript
 docker-compose build --force-rm --pull
@@ -83,7 +103,7 @@ $ command -v aws
 alias aws='docker-compose run --rm aws'
 
 $ aws --version
-aws-cli/1.17.8 Python/3.8.1 Linux/4.19.76-linuxkit botocore/1.14.8
+aws-cli/1.18.39 Python/3.8.2 Linux/4.19.76-linuxkit botocore/1.15.39
 ```
 
 ## Appendix
