@@ -2,4 +2,5 @@ version: '3.5'
 services:
     sut:
         build: .
+        entrypoint: ['/var/run_tests.sh']
         command: ['/var/run_tests.sh']
