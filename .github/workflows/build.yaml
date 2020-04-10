@@ -1,12 +1,13 @@
 name: "BUILD IAMGES"
 
 on:
-  push:
-    branches:
-      - master
+  release:
+    types: [published]
+  tags:
+    - [0-9].[0-9].[0-9]
 
 jobs:
-  run_test:
+  run_tests:
     runs-on: ubuntu-latest
 
     env:
@@ -15,7 +16,7 @@ jobs:
       AWS_REGION: ${{ secrets.AWS_REGION }}
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@master
 
       - name: Build the container
         run: |
@@ -26,16 +27,18 @@ jobs:
       - name: Run tests
         run: docker-compose run --rm sut
 
-  build:
+  build_images:
+    needs: run_test
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-
+      - uses: actions/checkout@master
       - name: Build a new container
         run: |
           docker login docker.pkg.github.com -u ${{ secrets.USER_NAME }} --password ${{ secrets.PACKAGE_TOKEN }}
           docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest ./docker/python/
           docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest
+          docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:{{ github.ref }} ./docker/python/
+          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:{{ github.ref }}
           docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:latest ./docker/python/
           docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:latest
