@@ -1,9 +1,9 @@
-name: CI
+name: "RUN TEST"
 
-on: [push]
+on: push
 
 jobs:
-  build:
+  run_test:
     runs-on: ubuntu-latest
 
     env:
@@ -16,7 +16,7 @@ jobs:
 
       - name: Build the container
         run: |
-          docker login docker.pkg.github.com -u tommyheavenly7 --password ${{ PACKAGE_TOKEN }}
+          docker login docker.pkg.github.com -u ${{ secrets.USER_NAME }} --password ${{ secrets.PACKAGE_TOKEN }}
           docker-compose up --no-start --force-recreate --build
           docker-compose ps
 
