@@ -1,0 +1,41 @@
+name: "BUILD IAMGES"
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  run_test:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_KEY: ${{ secrets.AWS_KEY }}
+      AWS_SECRET: ${{ secrets.AWS_SECRET }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build the container
+        run: |
+          docker login docker.pkg.github.com -u ${{ secrets.USER_NAME }} --password ${{ secrets.PACKAGE_TOKEN }}
+          docker-compose up --no-start --force-recreate --build
+          docker-compose ps
+
+      - name: Run tests
+        run: docker-compose run --rm sut
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build a new container
+        run: |
+          docker login docker.pkg.github.com -u ${{ secrets.USER_NAME }} --password ${{ secrets.PACKAGE_TOKEN }}
+          docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest ./docker/python/
+          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest
+          docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:latest ./docker/python/
+          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:latest
