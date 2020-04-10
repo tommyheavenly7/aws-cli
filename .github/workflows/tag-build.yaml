@@ -2,8 +2,8 @@ name: "BUILD IAMGES"
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - "[0-9].[0-9].[0-9]"
 
 jobs:
   run_tests:
@@ -35,7 +35,5 @@ jobs:
       - name: Build a new container
         run: |
           docker login docker.pkg.github.com -u ${{ secrets.USER_NAME }} --password ${{ secrets.PACKAGE_TOKEN }}
-          docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest ./docker/python/
-          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest
-          docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:latest ./docker/python/
-          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:latest
+          docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:{{ github.ref }} ./docker/python/
+          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:{{ github.ref }}
