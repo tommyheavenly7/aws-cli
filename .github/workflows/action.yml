@@ -16,6 +16,7 @@ jobs:
 
       - name: Build the container
         run: |
+          docker login docker.pkg.github.com -u tommyheavenly7 --password ${{ PACKAGE_TOKEN }}
           docker-compose up --no-start --force-recreate --build
           docker-compose ps
 
