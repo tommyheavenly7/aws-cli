@@ -4,8 +4,6 @@
 
 [amazon/aws-cli](https://hub.docker.com/r/amazon/aws-cli)
 
-
-
 ----
 
 This is a containerised **AWS CLI v1** using [Python official image](https://hub.docker.com/_/python).
