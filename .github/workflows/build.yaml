@@ -27,7 +27,7 @@ jobs:
         run: docker-compose run --rm sut
 
   build_images:
-    needs: run_test
+    needs: run_tests
     runs-on: ubuntu-latest
 
     steps:

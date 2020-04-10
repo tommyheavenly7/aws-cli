@@ -27,13 +27,17 @@ jobs:
         run: docker-compose run --rm sut
 
   build_images:
-    needs: run_test
+    needs: run_tests
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@master
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Build a new container
         run: |
           docker login docker.pkg.github.com -u ${{ secrets.USER_NAME }} --password ${{ secrets.PACKAGE_TOKEN }}
-          docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:{{ github.ref }} ./docker/python/
-          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:{{ github.ref }}
+          echo ${{ steps.get_version.outputs.VERSION }}
+          docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:${{ steps.get_version.outputs.VERSION }} ./docker/python/
+          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:${{ steps.get_version.outputs.VERSION }}
