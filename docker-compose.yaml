@@ -2,7 +2,7 @@ version: '3.5'
 services:
   aws:
     container_name: "aws-cli_command"
-    image: "docker.pkg.github.com/tommyheavenly7/aws-cli/aws"
+    image: "docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest"
     environment:
       - "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}"
       - "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
