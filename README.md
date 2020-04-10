@@ -1,6 +1,14 @@
 # aws-cli
 
-This is a containerised AWS CLI using [Python official image](https://hub.docker.com/_/python).
+[amazon](https://hub.docker.com/u/amazon) finally released the **AWS CLI v2** as a docker image. We can use it the exact same way as I'm trying to provide. Why not consider to use the official one first if you're looking for the latest version.
+
+[amazon/aws-cli](https://hub.docker.com/r/amazon/aws-cli)
+
+
+
+----
+
+This is a containerised **AWS CLI v1** using [Python official image](https://hub.docker.com/_/python).
 
 ## Basic Usage
 
