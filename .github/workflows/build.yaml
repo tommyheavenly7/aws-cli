@@ -34,7 +34,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build a new container
         run: |
-          docker login docker.pkg.github.com -u ${{ secrets.USER_NAME }} --password ${{ secrets.PACKAGE_TOKEN }}
+          echo ${{ secrets.PACKAGE_TOKEN }} | docker login docker.pkg.github.com -u ${{ secrets.USER_NAME }} --password-stdin
           docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest ./docker/python/
           docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest
           docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:latest ./docker/python/
