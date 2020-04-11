@@ -15,7 +15,7 @@ jobs:
       AWS_REGION: ${{ secrets.AWS_REGION }}
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
 
       - name: Build the container
         run: |
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
