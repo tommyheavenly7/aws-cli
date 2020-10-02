@@ -1,10 +1,9 @@
 name: "BUILD IAMGES"
 
 on:
-  push:
+  create:
     tags:
-      - "[0-9].[0-9].[0-9]"
-
+      - "*"
 jobs:
   run_tests:
     runs-on: ubuntu-latest
@@ -33,11 +32,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        id: vars
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
       - name: Build a new container
         run: |
-          echo ${{ secrets.PACKAGE_TOKEN }} | docker login docker.pkg.github.com -u ${{ secrets.USER_NAME }} --password-stdin
-          echo ${{ steps.get_version.outputs.VERSION }}
-          docker build --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:${{ steps.get_version.outputs.VERSION }} ./docker/python/
-          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:${{ steps.get_version.outputs.VERSION }}
+          echo ${{ secrets.PACKAGE_TOKEN }} | docker login docker.pkg.github.com -u tommyheavenly7 --password-stdin
+          echo ${{ steps.vars.outputs.tag }}
+          docker build --pull --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:${{ steps.vars.outputs.tag }} ./docker/python/
+          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:${{ steps.vars.outputs.tag }}
+          docker build --pull --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest ./docker/python/
+          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest
+          docker build --pull --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:${{ steps.vars.outputs.tag }} ./docker/python/
+          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:${{ steps.vars.outputs.tag }}
+          docker build --pull --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:latest ./docker/python/
+          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:latest
