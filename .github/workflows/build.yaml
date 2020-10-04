@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Build a new container
+      - name: Build new images
         run: |
           echo ${{ secrets.PACKAGE_TOKEN }} | docker login docker.pkg.github.com -u tommyheavenly7 --password-stdin
           docker build --pull --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest ./docker/python/
