@@ -4,7 +4,7 @@ RUN apk --no-cache add \
     "bash>=5.0.11-r1" \
     "curl>=7.67.0-r0" \
     "groff>=1.22.4-r0" \
-    "jq>=1.6-r1" \
+    "jq>=1.6_rc1-r0" \
     "less>=551-r0"
 
 RUN pip install --upgrade "pip>=20.0.1"
