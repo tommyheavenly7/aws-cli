@@ -20,11 +20,6 @@ if ! [ -x "$(command -v groff)" ]; then
   exit 1
 fi
 
-if ! [ -x "$(command -v jq)" ]; then
-  echo 'Error: jq is not installed.' >&2
-  exit 1
-fi
-
 if ! [ -x "$(command -v less)" ]; then
   echo 'Error: less is not installed.' >&2
   exit 1
