@@ -18,6 +18,7 @@ jobs:
 
       - name: Build the container
         run: |
+          echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           docker login docker.pkg.github.com -u ${{ secrets.USER_NAME }} --password ${{ secrets.PACKAGE_TOKEN }}
           docker-compose up --no-start --force-recreate --build
           docker-compose ps
@@ -36,6 +37,7 @@ jobs:
         run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
       - name: Build a new container
         run: |
+          echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           echo ${{ secrets.PACKAGE_TOKEN }} | docker login docker.pkg.github.com -u tommyheavenly7 --password-stdin
           echo ${{ steps.vars.outputs.tag }}
           docker build --pull --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:${{ steps.vars.outputs.tag }} ./docker/python/
