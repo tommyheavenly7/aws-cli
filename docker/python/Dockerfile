@@ -10,10 +10,10 @@ RUN apk --no-cache add \
     "libcrypto1.1>=1.1.1i-r0" \
     "libssl1.1>=1.1.1i-r0" \
     "libtirpc>=1.2.6-r0" \
-    "musl>=1.1.24-r10"
+    "musl>=1.2.2_pre2-r0"
 
 RUN pip install --upgrade "pip>=20.3.3"
-RUN pip install --upgrade "awscli>=1.18.197"
+RUN pip install --upgrade "awscli>=1.19.44"
 RUN bash -c 'echo complete -C '/usr/local/bin/aws_completer' aws  >> $HOME/.bashrc'
 
 COPY ./run_tests.sh /var/run_tests.sh
