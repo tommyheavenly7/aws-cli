@@ -1,5 +1,6 @@
 FROM python:3-alpine
 
+ENV PYTHONUNBUFFERED=1
 RUN apk --no-cache add \
     "bash>=5.0.17-r0" \
     "curl>=7.77.0-r0" \
