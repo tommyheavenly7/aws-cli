@@ -19,7 +19,7 @@ jobs:
       - name: Build the container
         run: |
           echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker login docker.pkg.github.com -u ${{ secrets.USER_NAME }} --password ${{ secrets.PACKAGE_TOKEN }}
+          docker login ghcr.io -u ${{ secrets.USER_NAME }} --password ${{ secrets.PACKAGE_TOKEN }}
           docker-compose up --no-start --force-recreate --build
           docker-compose ps
 
@@ -38,13 +38,13 @@ jobs:
       - name: Build a new container
         run: |
           echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          echo ${{ secrets.PACKAGE_TOKEN }} | docker login docker.pkg.github.com -u tommyheavenly7 --password-stdin
+          echo ${{ secrets.PACKAGE_TOKEN }} | docker login ghcr.io -u tommyheavenly7 --password-stdin
           echo ${{ steps.vars.outputs.tag }}
-          docker build --pull --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:${{ steps.vars.outputs.tag }} ./docker/python/
-          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:${{ steps.vars.outputs.tag }}
-          docker build --pull --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest ./docker/python/
-          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws:latest
-          docker build --pull --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:${{ steps.vars.outputs.tag }} ./docker/python/
-          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:${{ steps.vars.outputs.tag }}
-          docker build --pull --tag docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:latest ./docker/python/
-          docker push docker.pkg.github.com/tommyheavenly7/aws-cli/aws-1x:latest
+          docker build --pull --tag ghcr.io/tommyheavenly7/aws-cli/aws:${{ steps.vars.outputs.tag }} ./docker/python/
+          docker push ghcr.io/tommyheavenly7/aws-cli/aws:${{ steps.vars.outputs.tag }}
+          docker build --pull --tag ghcr.io/tommyheavenly7/aws-cli/aws:latest ./docker/python/
+          docker push ghcr.io/tommyheavenly7/aws-cli/aws:latest
+          docker build --pull --tag ghcr.io/tommyheavenly7/aws-cli/aws-1x:${{ steps.vars.outputs.tag }} ./docker/python/
+          docker push ghcr.io/tommyheavenly7/aws-cli/aws-1x:${{ steps.vars.outputs.tag }}
+          docker build --pull --tag ghcr.io/tommyheavenly7/aws-cli/aws-1x:latest ./docker/python/
+          docker push ghcr.io/tommyheavenly7/aws-cli/aws-1x:latest
