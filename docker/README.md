@@ -14,38 +14,26 @@ echo $PACKAGE_TOKEN | docker login ghcr.io -u $USER_NAME --password-stdin
 echo $DOCKER_TOKEN | docker login -u $DOCKER_USER_NAME --password-stdin
 ```
 
-## Build the latest images
+## Build the latest images and push them
+
+Firstly, you might want to enable `buildx` to build for multiple platforms at a time:
+
+```shell script
+docker buildx create --use
+```
 
 ### GHCR
 
 ```shell script
-docker build --pull --tag ghcr.io/tommyheavenly7/aws-cli/aws:latest ./docker/python
+docker buildx build --platform linux/amd64,linux/arm64 --pull --no-cache --push --tag ghcr.io/tommyheavenly7/aws-cli/aws:latest ./docker/python
 ```
 
 ```shell script
-docker build --pull --tag ghcr.io/tommyheavenly7/aws-cli/aws-1x:latest ./docker/python
+docker buildx build --platform linux/amd64,linux/arm64 --pull --push --tag ghcr.io/tommyheavenly7/aws-cli/aws-1x:latest ./docker/python
 ```
 
 ### Docker Hub
 
 ```shell script
-docker build --pull --tag tommynovember7/aws-cli:latest ./docker/python
-```
-
-## Push the images
-
-### GHCR
-
-```shell script
-docker push ghcr.io/tommyheavenly7/aws-cli/aws:latest
-```
-
-```shell script
-docker push ghcr.io/tommyheavenly7/aws-cli/aws-1x:latest
-```
-
-### Docker Hub
-
-```shell script
-docker push tommynovember7/aws-cli:latest
+docker buildx build --platform linux/amd64,linux/arm64 --pull --no-cache --push --tag tommynovember7/aws-cli:latest ./docker/python
 ```
