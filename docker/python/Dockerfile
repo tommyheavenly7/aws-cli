@@ -4,6 +4,7 @@ ENV PYTHONUNBUFFERED=1
 RUN apk --no-cache add \
     "bash>=5.0.17-r0" \
     "curl>=7.77.0-r0" \
+    "expat>=2.4.9-r0" \
     "groff>=1.22.4-r1" \
     "krb5-conf>=1.0-r2" \
     "krb5-libs>=1.18.3-r0" \
