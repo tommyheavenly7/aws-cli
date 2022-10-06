@@ -19,7 +19,7 @@ jobs:
       - name: Build the container
         run: |
           echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker login ghcr.io -u ${{ secrets.USER_NAME }} --password ${{ secrets.PACKAGE_TOKEN }}
+          echo ${{ secrets.PACKAGE_TOKEN }} | docker login ghcr.io -u tommyheavenly7 --password-stdin
           docker-compose up --no-start --force-recreate --build
           docker-compose ps
 
